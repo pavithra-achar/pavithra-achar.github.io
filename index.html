@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        
+        <nav>
+            <a href="#projects">Projects</a>
+            <a href="#papers">Papers</a>
+            <a href="#contact" class="contact-me">Contact Me</a>
+        </nav>
+
+    </header>
+
+    <section id="about-me">
+        <h1>About Me</h1>
+        <h2>Hello! I'm Pavithra Achar, a third-year Computer Science student at the National University of Singapore (NUS) with a passion for creating things that are pretty (and that work). You can see all the things I'm working on here!</h4 >
+    </section>
+
+    <section id="projects">
+        <h1>Projects</h1>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="uiux">UI/UX</button>
+            <button class="filter-btn" data-filter="software">Software Engineering</button>
+            <button class="filter-btn" data-filter="game">Game Development</button>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card" data-category="uiux" onclick="window.open('https://pavithra-achar.github.io/skill-track', '_blank')">
+                <h3>Skill-Track</h3>
+                <p>A comprehensive UX case study for an AI-powered career guidance platform. </p>
+                <span class="project-tag">UI/UX</span>
+            </div>
+            <div class="project-card" data-category="software">
+                <h3>Wavelength</h3>
+                <p>An all-in-one co-living management app designed to simplify shared living for students and young professionals.</p>
+                <span class="project-tag">Software Engineering</span>
+            </div>
+            <div class="project-card" data-category="game" onclick="window.open('https://github.com/ananyaj1515/nus-lastbus', '_blank')">
+                <h3>NUS LastBus</h3>
+                <p>A 2D platformer game developed in Unity inspired by NUS campus life, where players navigate slopes, jumps, and event-triggered obstacles using physics-based gameplay.</p>
+                <span class="project-tag">Game Development</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="papers">
+        <h1>Papers</h1>
+        <p class="coming-soon">Hopefully, coming soon</p>
+    </section>
+
+    <section id="contact">
+        <h1>Contact Me</h1>
+        <form class="contact-form" id="contactForm">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Project filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        // Show all projects initially
+        projectCards.forEach(card => card.classList.add('show'));
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const filter = button.dataset.filter;
+
+                // Filter projects
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.classList.add('show');
+                    } else {
+                        card.classList.remove('show');
+                    }
+                });
+            });
+        });
+
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // Create mailto link
+            const mailtoLink = `mailto:pavithra.achar1505@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\n\nMessage:\n${message}`)}`;
+            
+            window.location.href = mailtoLink;
+            
+            this.reset();
+        });
+    </script>
+</body>
+</html>
